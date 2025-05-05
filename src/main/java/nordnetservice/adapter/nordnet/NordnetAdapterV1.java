@@ -242,7 +242,7 @@ public class NordnetAdapterV1 extends NordnetAdapterBase implements NordnetRepos
 
         if (hit == null) {
 
-            var page = getDownloader().download(ticker);
+            PageInfo page = getDownloader().download(info);
 
             Tuple2<StockPrice, List<StockOption>> options = parse(info.getStockTicker(), page);
 

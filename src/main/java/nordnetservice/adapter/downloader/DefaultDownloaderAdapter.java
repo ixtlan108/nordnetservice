@@ -54,6 +54,11 @@ public class DefaultDownloaderAdapter  implements  Downloader<PageInfo> {
         return result;
     }
 
+    @Override
+    public PageInfo download(StockOptionInfo info) {
+        return download(info.getStockTicker(), info.getNordnetMillis());
+    }
+
     PageInfo download(StockTicker ticker, long nordnetMillis) {
         try {
             var url = NordnetUtil.urlFor(ticker, nordnetMillis);
@@ -68,11 +73,6 @@ public class DefaultDownloaderAdapter  implements  Downloader<PageInfo> {
         } catch (IOException | InterruptedException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public PageInfo download(StockOptionTicker ticker) {
-        return null;
     }
 
     private HttpClient getClient() {

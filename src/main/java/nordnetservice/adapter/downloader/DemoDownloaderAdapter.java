@@ -89,8 +89,8 @@ public class DemoDownloaderAdapter implements Downloader<PageInfo> {
     }
 
     @Override
-    public PageInfo download(StockOptionTicker ticker) {
-        return null; //downloadOne(ticker);
+    public PageInfo download(StockOptionInfo info) {
+        return download(info.getStockTicker()).getFirst();
     }
 
     private String urlFor(StockTicker ticker) {

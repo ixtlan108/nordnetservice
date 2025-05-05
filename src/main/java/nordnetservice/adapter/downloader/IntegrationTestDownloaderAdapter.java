@@ -1,5 +1,6 @@
 package nordnetservice.adapter.downloader;
 
+import nordnetservice.domain.stockoption.StockOptionInfo;
 import org.htmlunit.WebClient;
 import nordnetservice.domain.downloader.Downloader;
 import nordnetservice.domain.html.PageInfo;
@@ -72,8 +73,8 @@ public class IntegrationTestDownloaderAdapter implements Downloader<PageInfo> {
     }
 
     @Override
-    public PageInfo download(StockOptionTicker ticker) {
-        return downloadOne();
+    public PageInfo download(StockOptionInfo info) {
+        return null;
     }
 
     private PageInfo downloadOne() {

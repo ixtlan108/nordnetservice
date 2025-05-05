@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface Downloader<T> {
     List<T> download(StockTicker ticker);
-    T download(StockOptionTicker ticker);
+    //T download(StockOptionTicker ticker);
     //T downloadOne(StockTicker ticker);
-    //T downloadOne(StockOptionInfo info);
+    T download(StockOptionInfo info);
 }
