@@ -14,6 +14,6 @@ public interface NordnetRepository {
     List<StockOption> getPuts(StockTicker ticker);
     StockPrice getStockPrice(StockTicker ticker);
     Tuple2<StockPrice,StockOption> findOption(StockOptionTicker ticker);
-    OpeningPrice openingPrice(StockTicker ticker);
+    //OpeningPrice openingPrice(StockTicker ticker);
     void resetCaffeine();
 }

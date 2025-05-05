@@ -282,6 +282,7 @@ public class NordnetAdapterV1 extends NordnetAdapterBase implements NordnetRepos
          */
     }
 
+    /*
     @Override
     public OpeningPrice openingPrice(StockTicker ticker) {
         var page = getDownloader().downloadOne(ticker);
@@ -290,6 +291,8 @@ public class NordnetAdapterV1 extends NordnetAdapterBase implements NordnetRepos
         var sp = parseStockPrice(ticker, roleTable.getFirst(), false);
         return new OpeningPrice(ticker, sp.cls());
     }
+    dd
+     */
 
     @Override
     public void resetCaffeine() {

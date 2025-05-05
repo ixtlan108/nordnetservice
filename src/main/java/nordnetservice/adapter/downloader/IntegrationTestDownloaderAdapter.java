@@ -1,6 +1,5 @@
 package nordnetservice.adapter.downloader;
 
-import nordnetservice.domain.stockoption.StockOptionInfo;
 import org.htmlunit.WebClient;
 import nordnetservice.domain.downloader.Downloader;
 import nordnetservice.domain.html.PageInfo;
@@ -34,22 +33,6 @@ public class IntegrationTestDownloaderAdapter implements Downloader<PageInfo> {
     }
 
     private List<PageInfo> result = null;
-
-    /*
-    private List<PageInfo> downloadV2(StockTicker ticker) {
-        if (result == null) {
-            try {
-                var page = client.getPage(testUrlV2);
-                var content = page.getWebResponse().getContentAsString();
-                var info = new PageInfo(content);
-                result = Collections.singletonList(info);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return result;
-    }
-     */
 
     @Override
     public List<PageInfo> download(StockTicker ticker) {
@@ -101,16 +84,6 @@ public class IntegrationTestDownloaderAdapter implements Downloader<PageInfo> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public PageInfo downloadOne(StockTicker ticker) {
-        return downloadOne();
-    }
-
-    @Override
-    public PageInfo downloadOne(StockOptionInfo info) {
-        return null;
     }
 
 }

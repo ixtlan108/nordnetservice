@@ -85,9 +85,11 @@ public class Core {
         return handle(() -> nordnetRepository.getStockPrice(ticker));
     }
 
+    /*
     public Either<ApplicationError,OpeningPrice> openingPrice(StockTicker ticker) {
         return handle(() -> nordnetRepository.openingPrice(ticker));
     }
+     */
 
     public Optional<ApplicationError> thirdFridayMillis(List<YearMonthDTO> items) {
         try {

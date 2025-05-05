@@ -93,22 +93,6 @@ public class DemoDownloaderAdapter implements Downloader<PageInfo> {
         return null; //downloadOne(ticker);
     }
 
-    @Override
-    public PageInfo downloadOne(StockTicker ticker) {
-        try {
-            var page = client.getPage(urlFor(ticker));
-            var content = page.getWebResponse().getContentAsString();
-            return new PageInfo(content);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public PageInfo downloadOne(StockOptionInfo info) {
-        return downloadOne(info.getStockTicker());
-    }
-
     private String urlFor(StockTicker ticker) {
         return String.format("%s/%s.html", urlDemoPath, ticker.ticker());
     }
