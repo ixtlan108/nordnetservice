@@ -1,6 +1,5 @@
 package nordnetservice.adapter;
 
-import nordnetservice.adapter.downloader.DemoDownloaderAdapter;
 import nordnetservice.adapter.nordnet.NordnetAdapterV1;
 import nordnetservice.domain.stock.StockPrice;
 import nordnetservice.domain.stock.StockTicker;

@@ -11,19 +11,24 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 @Component
-@Profile({"demo","docker"})
-public class DemoDownloaderAdapter implements Downloader<PageInfo> {
+@Profile({"test", "integration"})
+public class IntegrationTestDownloaderAdapter implements Downloader<PageInfo> {
     private final WebClient client;
-    private final String urlDemoPath;
+    private final String testUrl;
+    private final String testUrl2;
 
-    public DemoDownloaderAdapter(@Value("${url.path}") String urlDemoPath) {
-        System.out.println(urlDemoPath);
+    public IntegrationTestDownloaderAdapter(@Value("${url.test}") String testUrl,
+                                            @Value("${url.test.2:#{null}}") String testUrl2) {
+        System.out.println(testUrl);
+        System.out.println(testUrl2);
+        this.testUrl = testUrl;
+        this.testUrl2 = testUrl2;
 
-        this.urlDemoPath = urlDemoPath;
         this.client = new WebClient();
         this.client.getOptions().setJavaScriptEnabled(false);
     }
@@ -51,13 +56,10 @@ public class DemoDownloaderAdapter implements Downloader<PageInfo> {
         if (result == null) {
 
             try {
-                var page = client.getPage(urlFor(ticker));
+                var page = client.getPage(testUrl);
                 var content = page.getWebResponse().getContentAsString();
                 var info = new PageInfo(content);
 
-                result = Collections.singletonList(info);
-
-                /*
                 if (testUrl2 == null) {
                     result = Collections.singletonList(info);
                 } else {
@@ -66,8 +68,6 @@ public class DemoDownloaderAdapter implements Downloader<PageInfo> {
                     var info2 = new PageInfo(content2);
                     result = Arrays.asList(info, info2);
                 }
-
-                 */
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -90,13 +90,12 @@ public class DemoDownloaderAdapter implements Downloader<PageInfo> {
 
     @Override
     public PageInfo download(StockOptionTicker ticker) {
-        return null; //downloadOne(ticker);
+        return downloadOne();
     }
 
-    @Override
-    public PageInfo downloadOne(StockTicker ticker) {
+    private PageInfo downloadOne() {
         try {
-            var page = client.getPage(urlFor(ticker));
+            var page = client.getPage(testUrl);
             var content = page.getWebResponse().getContentAsString();
             return new PageInfo(content);
         } catch (IOException e) {
@@ -105,11 +104,13 @@ public class DemoDownloaderAdapter implements Downloader<PageInfo> {
     }
 
     @Override
-    public PageInfo downloadOne(StockOptionInfo info) {
-        return downloadOne(info.getStockTicker());
+    public PageInfo downloadOne(StockTicker ticker) {
+        return downloadOne();
     }
 
-    private String urlFor(StockTicker ticker) {
-        return String.format("%s/%s.html", urlDemoPath, ticker.ticker());
+    @Override
+    public PageInfo downloadOne(StockOptionInfo info) {
+        return null;
     }
+
 }

@@ -4,6 +4,7 @@ import nordnetservice.adapter.RedisAdapter;
 import nordnetservice.domain.downloader.Downloader;
 import nordnetservice.domain.html.PageInfo;
 import nordnetservice.domain.stock.StockTicker;
+import nordnetservice.domain.stockoption.StockOptionInfo;
 import nordnetservice.domain.stockoption.StockOptionTicker;
 import nordnetservice.util.NordnetUtil;
 import org.apache.http.HttpStatus;
@@ -78,6 +79,11 @@ public class DefaultDownloaderAdapter  implements  Downloader<PageInfo> {
     public PageInfo downloadOne(StockTicker ticker) {
         var nordnetMillis = redisAdapter.nordnetMillisForUrl(LocalDate.now());
         return download(ticker, nordnetMillis.get(0));
+    }
+
+    @Override
+    public PageInfo downloadOne(StockOptionInfo info) {
+        return null;
     }
 
     private HttpClient getClient() {
