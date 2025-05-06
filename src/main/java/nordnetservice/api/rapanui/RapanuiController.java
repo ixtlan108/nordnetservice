@@ -25,17 +25,22 @@ public class RapanuiController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/option/{ticker}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/stockoption/{ticker}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PayloadResponse<FindOptionResponse>> findOption(@PathVariable("ticker") String ticker) {
 
         var result = core.findOption(new StockOptionTicker(ticker));
 
         return ApiUtil.mapWithFn(result, r -> {
+            var stock = r.first();
             var opt = r.second();
             return new FindOptionResponse(new FindOptionItem(opt.getBid(),
-                    opt.getAsk()),
-                    opt.getOpType().getIndex(),
-                    opt.getOpType().getValue());
+                    opt.getAsk(),
+                    stock.cls(),
+                    opt.getDays(),
+                    opt.getX(),
+                    opt.getIvBid()),
+                    0,
+                    null);
         });
 
     }
