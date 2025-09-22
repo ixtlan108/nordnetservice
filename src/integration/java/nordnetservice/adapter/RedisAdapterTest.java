@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 // @ActiveProfiles("test")
 
@@ -21,12 +22,13 @@ public class RedisAdapterTest {
     @Test
     void test_opening_price() {
         var result = redisAdapter.openingPrice(new StockTicker("YAR"));
+        assertNotNull(result);
         assertEquals(403.0, result, 0.01);
     }
 
     @Test
     void test_nordnet_millis() {
-        var actual = redisAdapter.nordnetMillisForUrl(LocalDate.of(2023,3,1));
+        var actual = redisAdapter.nordnetMillisForUrl(LocalDate.of(2024,1,10));
         assertEquals(3, actual.size());
     }
 

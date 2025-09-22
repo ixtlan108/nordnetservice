@@ -43,6 +43,7 @@ public class NordnetAdapterV1 extends NordnetAdapterBase implements NordnetRepos
     private static final int PUT_BID = 9;
     private static final int PUT_ASK = 10;
     private static final int PUT_TICKER = 13;
+    private final boolean fetchOpeningPrice;
     private final Pattern pat = Pattern.compile("Norway\\s*(\\S*)");
     private final RedisAdapter redisAdapter;
     private final LocalDate curDate;
@@ -58,11 +59,13 @@ public class NordnetAdapterV1 extends NordnetAdapterBase implements NordnetRepos
                             @Value("${curdate:#{null}}") String curDateStr,
                             @Value("${curdate.v1:#{null}}") String curDateTest,
                             @Value("${cache.options.expiry}") int optionsExpiry,
-                            @Value("${cache.option.expiry}") int optionExpiry) {
+                            @Value("${cache.option.expiry}") int optionExpiry,
+                            @Value("${redis.fetchOpeningPrice}") boolean fetchOpeningPrice) {
         super(downloaderAdapter);
         this.redisAdapter = redisAdapter;
         this.blackScholes = blackScholes;
         this.binomialTree = binomialTree;
+        this.fetchOpeningPrice = fetchOpeningPrice;
         /*
         if (curDateStr == null || curDateStr.equals("today")) {
             curDate = LocalDate.now();
@@ -134,7 +137,7 @@ public class NordnetAdapterV1 extends NordnetAdapterBase implements NordnetRepos
         return Stream.concat(calls.stream(), puts.stream()).toList();
     }
 
-    private StockPrice parseStockPrice(StockTicker ticker, Element el, boolean fetchOpeningPrice) {
+    private StockPrice parseStockPrice(StockTicker ticker, Element el) {
         var rows = el.children();
         var stockPriceRow = rows.get(1);
         var rc = stockPriceRow.children();
@@ -156,7 +159,7 @@ public class NordnetAdapterV1 extends NordnetAdapterBase implements NordnetRepos
     private Tuple2<StockPrice,List<StockOption>> parse(StockTicker ticker, PageInfo page) {
         var soup = Jsoup.parse(page.body());
         var roleTable = soup.select("[role=table]");
-        var sp = parseStockPrice(ticker, roleTable.get(0), true);
+        var sp = parseStockPrice(ticker, roleTable.get(0));
         var options = parseOptions(sp, roleTable.get(1));
         return new Tuple2<>(sp, options);
     }

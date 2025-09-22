@@ -43,7 +43,9 @@ public class NordnetUtil {
     }
 
     private static String pathQueryFor(StockTicker ticker, long nordnetMillis) {
-        return String.format("/market/options?currency=NOK&underlyingSymbol=%s&expireDate=%d",  ticker.ticker(), nordnetMillis);
+        return String.format("/derivat/opsjoner/liste?currency=NOK&underlyingSymbol=%s&expireDate=%d",  ticker.ticker(), nordnetMillis);
+        //return String.format("/market/options?currency=NOK&underlyingSymbol=%s&expireDate=%d",  ticker.ticker(), nordnetMillis);
+        //https://www.nordnet.no/derivat/opsjoner/liste?currency=NOK&underlyingSymbol=YAR&expireDate=1766098800000
     }
     /*
    scheme:[//authority]path[?query][#fragment]

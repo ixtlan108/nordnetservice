@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-@Profile({"test", "integration"})
+@Profile({"test", "integrationx"})
 public class IntegrationTestDownloaderAdapter implements Downloader<PageInfo> {
     private final WebClient client;
     private final String testUrl;

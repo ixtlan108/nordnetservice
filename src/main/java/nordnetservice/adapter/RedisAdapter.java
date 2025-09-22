@@ -19,10 +19,10 @@ public class RedisAdapter {
         this.redisTemplate = redisTemplate;
     }
 
-    public double openingPrice(StockTicker ticker) {
+    public Double openingPrice(StockTicker ticker) {
         var result = (String)redisTemplate.opsForHash().get("stockprice:open",
                 String.format("%d",ticker.oid()));
-        return Double.parseDouble(result);
+        return result == null ? null : Double.parseDouble(result);
     }
 
     public List<Long> nordnetMillisForUrl(LocalDate cutOffDate)  {

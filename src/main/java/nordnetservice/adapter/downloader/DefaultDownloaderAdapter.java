@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Profile("prod")
+@Profile({"prod", "integration"})
 public class DefaultDownloaderAdapter  implements  Downloader<PageInfo> {
     private final Logger logger = LoggerFactory.getLogger(DefaultDownloaderAdapter.class);
 
