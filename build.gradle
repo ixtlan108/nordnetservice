@@ -45,16 +45,16 @@ tasks.named('test') {
 }
 
 
+/*
 sourceSets {
 	integration {
 		java {
 			compileClasspath += sourceSets.main.output + sourceSets.test.output
 			runtimeClasspath += sourceSets.main.output + sourceSets.test.output
-			//srcDir file("src/integration/java")
 		}
-		//resources.srcDir file("src/integration/resources")
 	}
 }
+ */
 
 tasks.register('integrationTest', Test) {
 	description = "Run integration tests"
@@ -69,16 +69,6 @@ configurations {
 	integrationRuntimeOnly.extendsFrom(testRuntimeOnly)
 }
 
-/*
-idea {
-	module {
-		testSourceDirs += sourceSets.integration.java.srcDirs
-		testResourceDirs += sourceSets.integration.resources.srcDirs
-		//scopes.TEST.plus += [ configurations.integrationImplementation ]
-	}
-}
- */
-
 tasks.named('integrationTest') {
 	useJUnitPlatform()
 }
@@ -86,6 +76,8 @@ tasks.named('integrationTest') {
 sourceSets {
     integration  {
         java {
+            compileClasspath += sourceSets.main.output + sourceSets.test.output
+            runtimeClasspath += sourceSets.main.output + sourceSets.test.output
             srcDirs = ['src/integration/java']
         }
     }
